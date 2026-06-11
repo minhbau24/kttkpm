@@ -1,0 +1,8 @@
+checkpoints
+data/categories.json
+data/product.csv
+data/test_interactions.csv
+data/train_interactions.csv
+data/val_interactions.csv
+__pycache__/
+mappings.pkl

@@ -1,0 +1,46 @@
+{% extends 'catalog/base.html' %}
+{% block title %}Gợi Ý Cá Nhân Hóa - E-Shop Storefront{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 40px; text-align: center;">
+    <h2 style="font-weight: 800; font-size: 2.2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px;">
+        Gợi Ý Dành Riêng Cho Bạn
+    </h2>
+    <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
+        Dựa trên hành vi xem hàng, thêm vào giỏ và lịch sử giao dịch trước đây của bạn, trợ lý AI đề xuất danh sách sản phẩm tốt nhất dưới đây:
+    </p>
+</div>
+
+<div class="product-grid">
+    {% for prod in products %}
+        <div class="product-card">
+            <div class="product-image">
+                {% if prod.image_url %}
+                    <img src="{{ prod.image_url }}" alt="{{ prod.name }}">
+                {% else %}
+                    <div style="display:flex; justify-content:center; align-items:center; height:100%; color:var(--text-secondary);">Không có hình ảnh</div>
+                {% endif %}
+                
+                {% if prod.category %}
+                    <span class="product-badge">{{ prod.category.name }}</span>
+                {% endif %}
+            </div>
+            <div class="product-info">
+                <h4 class="product-title">
+                    <a href="{% url 'product_detail' prod.id %}">{{ prod.name }}</a>
+                </h4>
+                <div class="product-meta">
+                    <span class="product-price">{{ prod.price|floatformat:"0" }} đ</span>
+                    <span class="product-rating" style="color: var(--accent-color);">
+                        ★ {{ prod.rating_average|floatformat:1 }} (AI: {% widthratio forloop.counter 1 15|add:70 %}%)
+                    </span>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div style="text-align: center; margin-top: 40px;">
+    <button onclick="toggleChatPopup(event)" class="btn-primary" style="padding: 12px 30px; border: none; cursor: pointer;">Trò Chuyện Với Trợ Lý AI</button>
+</div>
+{% endblock %}

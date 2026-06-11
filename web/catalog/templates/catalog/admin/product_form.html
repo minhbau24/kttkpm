@@ -1,0 +1,135 @@
+{% extends 'catalog/base.html' %}
+{% block title %}{% if is_edit %}Sửa sản phẩm #{{ product.id }}{% else %}Thêm sản phẩm mới{% endif %} - E-Shop Storefront{% endblock %}
+
+{% block content %}
+<div class="form-card" style="max-width: 650px; padding: 32px;">
+    <h2 style="font-family: var(--font-signifier); font-size: 2rem; font-weight: 400; text-align: left; margin-bottom: 8px;">
+        {% if is_edit %}Sửa Sản Phẩm #{{ product.id }}{% else %}Thêm Sản Phẩm Mới{% endif %}
+    </h2>
+    <p style="color: var(--text-secondary); margin-bottom: 24px; font-size: 14px;">Điền đầy đủ thông tin sản phẩm và các thuộc tính liên quan.</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <!-- Name -->
+        <div class="form-group">
+            <label for="id_name">Tên sản phẩm *</label>
+            <input type="text" name="name" id="id_name" class="form-control" value="{{ product.name|default:'' }}" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <!-- Price -->
+            <div class="form-group">
+                <label for="id_price">Đơn giá (đ) *</label>
+                <input type="number" name="price" id="id_price" class="form-control" value="{{ product.price|floatformat:'0'|default:'' }}" required min="0">
+            </div>
+            <!-- Stock -->
+            <div class="form-group">
+                <label for="id_stock">Số lượng tồn kho *</label>
+                <input type="number" name="stock" id="id_stock" class="form-control" value="{{ product.stock|default:'10' }}" required min="0">
+            </div>
+        </div>
+
+        <!-- Image URL -->
+        <div class="form-group">
+            <label for="id_image_url">Đường dẫn hình ảnh (Image URL)</label>
+            <input type="url" name="image_url" id="id_image_url" class="form-control" value="{{ product.image_url|default:'' }}" placeholder="https://images.unsplash.com/photo-...">
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+            <label for="id_description">Mô tả sản phẩm</label>
+            <textarea name="description" id="id_description" class="form-control" rows="4" style="resize: vertical;">{{ product.description|default:'' }}</textarea>
+        </div>
+
+        <!-- Category -->
+        <div class="form-group">
+            <label for="id_category">Danh mục sản phẩm *</label>
+            <select name="category" id="id_category" class="form-control" onchange="toggleCategoryFields()" required style="height: 48px; background: white;">
+                <option value="">-- Chọn danh mục --</option>
+                {% for cat in categories %}
+                    <option value="{{ cat.id }}" data-slug="{{ cat.slug }}" {% if product.category.id == cat.id %}selected{% endif %}>{{ cat.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Sub-type: Book Details -->
+        <div id="book-fields" style="display: none; border-top: 1px solid var(--border-color); padding-top: 16px; margin-top: 16px; animation: fadeInUp 0.2s ease-out;">
+            <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 12px; color: var(--color-rust);">Thông tin chi tiết Sách</h4>
+            <div class="form-group">
+                <label for="id_author">Tác giả</label>
+                <input type="text" name="author" id="id_author" class="form-control" value="{{ book_details.author|default:'' }}">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="form-group">
+                    <label for="id_publisher">Nhà xuất bản</label>
+                    <input type="text" name="publisher" id="id_publisher" class="form-control" value="{{ book_details.publisher|default:'' }}">
+                </div>
+                <div class="form-group">
+                    <label for="id_isbn">Mã ISBN</label>
+                    <input type="text" name="isbn" id="id_isbn" class="form-control" value="{{ book_details.isbn|default:'' }}">
+                </div>
+            </div>
+        </div>
+
+        <!-- Sub-type: Electronics Details -->
+        <div id="electronics-fields" style="display: none; border-top: 1px solid var(--border-color); padding-top: 16px; margin-top: 16px; animation: fadeInUp 0.2s ease-out;">
+            <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 12px; color: var(--color-rust);">Thông tin chi tiết Thiết Bị Điện Tử</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="form-group">
+                    <label for="id_brand">Thương hiệu / Hãng</label>
+                    <input type="text" name="brand" id="id_brand" class="form-control" value="{{ electronics_details.brand|default:'' }}">
+                </div>
+                <div class="form-group">
+                    <label for="id_warranty">Thời hạn bảo hành (tháng)</label>
+                    <input type="number" name="warranty" id="id_warranty" class="form-control" value="{{ electronics_details.warranty|default:'12' }}" min="0">
+                </div>
+            </div>
+        </div>
+
+        <!-- Sub-type: Fashion Details -->
+        <div id="fashion-fields" style="display: none; border-top: 1px solid var(--border-color); padding-top: 16px; margin-top: 16px; animation: fadeInUp 0.2s ease-out;">
+            <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 12px; color: var(--color-rust);">Thông tin chi tiết Thời Trang</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="form-group">
+                    <label for="id_size">Kích thước (Size)</label>
+                    <input type="text" name="size" id="id_size" class="form-control" value="{{ fashion_details.size|default:'' }}" placeholder="S, M, L, XL, ...">
+                </div>
+                <div class="form-group">
+                    <label for="id_color">Màu sắc</label>
+                    <input type="text" name="color" id="id_color" class="form-control" value="{{ fashion_details.color|default:'' }}" placeholder="Đỏ, đen, trắng, ...">
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Actions -->
+        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 32px; border-top: 1px solid var(--border-color); padding-top: 20px;">
+            <a href="{% url 'admin_products' %}" class="btn-secondary">Hủy</a>
+            <button type="submit" class="btn-primary">Lưu sản phẩm</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function toggleCategoryFields() {
+        const select = document.getElementById('id_category');
+        if (!select) return;
+        const selectedOption = select.options[select.selectedIndex];
+        const slug = selectedOption ? (selectedOption.getAttribute('data-slug') || '') : '';
+
+        // Hide all subclass divs
+        document.getElementById('book-fields').style.display = 'none';
+        document.getElementById('electronics-fields').style.display = 'none';
+        document.getElementById('fashion-fields').style.display = 'none';
+
+        if (slug.includes('sach')) {
+            document.getElementById('book-fields').style.display = 'block';
+        } else if (slug.includes('dien-tu')) {
+            document.getElementById('electronics-fields').style.display = 'block';
+        } else if (slug.includes('thoi-trang')) {
+            document.getElementById('fashion-fields').style.display = 'block';
+        }
+    }
+    document.addEventListener('DOMContentLoaded', toggleCategoryFields);
+</script>
+{% endblock %}

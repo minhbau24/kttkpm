@@ -1,0 +1,100 @@
+{% extends 'catalog/base.html' %}
+{% block title %}Quản lý sản phẩm - E-Shop Storefront{% endblock %}
+
+{% block content %}
+<h2 style="font-family: var(--font-signifier); font-size: 2.2rem; font-weight: 400; margin-bottom: 10px;">Quản Lý Sản Phẩm</h2>
+<p style="color: var(--text-secondary); margin-bottom: 24px;">Xem danh sách sản phẩm, thực hiện các thao tác thêm, sửa, xóa mã sản phẩm.</p>
+
+<!-- Admin Sub Navigation -->
+<div style="display: flex; gap: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 32px; font-size: 15px;">
+    <a href="{% url 'admin_dashboard' %}" style="font-weight: 600; color: var(--text-secondary);">Tổng quan</a>
+    <a href="{% url 'admin_products' %}" style="font-weight: 600; color: var(--color-rust);">Sản phẩm</a>
+    <a href="{% url 'admin_orders' %}" style="font-weight: 600; color: var(--text-secondary);">Đơn hàng</a>
+    <a href="{% url 'admin_shipments' %}" style="font-weight: 600; color: var(--text-secondary);">Giao hàng</a>
+</div>
+
+<!-- Search & Add Actions -->
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 24px;">
+    <form method="GET" action="{% url 'admin_products' %}" class="search-box" style="flex: 1; max-width: 400px;">
+        <input type="text" name="q" placeholder="Tìm tên hoặc mã sản phẩm..." value="{{ q|default:'' }}" style="padding: 10px 16px; font-size: 14px;">
+    </form>
+    
+    <a href="{% url 'admin_product_create' %}" class="btn-primary" style="padding: 10px 24px; font-size: 14px;">+ Thêm Sản Phẩm</a>
+</div>
+
+<!-- Products Table -->
+<div style="background: var(--color-pure-white); border: 1px solid var(--border-color); border-radius: var(--radius-cards); padding: 24px; box-shadow: var(--shadow-subtle); overflow-x: auto;">
+    <table class="order-table" style="margin-bottom: 20px;">
+        <thead>
+            <tr>
+                <th>Mã SP</th>
+                <th>Hình ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Danh mục</th>
+                <th>Đơn giá</th>
+                <th>Tồn kho</th>
+                <th>Đánh giá</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prod in page_obj %}
+                <tr>
+                    <td style="font-weight: 700;">#{{ prod.id }}</td>
+                    <td>
+                        {% if prod.image_url %}
+                            <img src="{{ prod.image_url }}" alt="{{ prod.name }}" style="width: 48px; height: 48px; object-fit: cover; border-radius: 8px;">
+                        {% else %}
+                            <div style="width: 48px; height: 48px; background: var(--color-fog); border: 1px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--text-muted);">SP</div>
+                        {% endif %}
+                    </td>
+                    <td style="font-weight: 500; max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        <a href="{% url 'product_detail' prod.id %}" target="_blank" style="color: var(--color-ink); text-decoration: underline;">{{ prod.name }}</a>
+                    </td>
+                    <td>
+                        <span class="badge" style="background: var(--color-fog); color: var(--text-secondary); border: 1px solid var(--border-color);">
+                            {{ prod.category.name|default:"Chưa phân loại" }}
+                        </span>
+                    </td>
+                    <td style="font-weight: 600;">{{ prod.price|floatformat:"0" }} đ</td>
+                    <td>{{ prod.stock }} chiếc</td>
+                    <td style="color: var(--color-rust); font-weight: 550;">★ {{ prod.rating_average|floatformat:1 }}</td>
+                    <td>
+                        <div style="display: flex; gap: 8px;">
+                            <a href="{% url 'admin_product_edit' prod.id %}" class="btn-secondary" style="padding: 6px 12px; font-size: 13px; border-radius: 6px;">Sửa</a>
+                            <a href="{% url 'admin_product_delete' prod.id %}" class="btn-secondary" style="padding: 6px 12px; font-size: 13px; border-radius: 6px; color: var(--danger-color); border-color: #fee2e2; background: #fff5f5;">Xóa</a>
+                        </div>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="8" style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                        <h3>Không tìm thấy sản phẩm nào!</h3>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}{% if q %}&q={{ q }}{% endif %}" class="page-link">&laquo;</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <span class="page-link active">{{ num }}</span>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a href="?page={{ num }}{% if q %}&q={{ q }}{% endif %}" class="page-link">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{% if q %}&q={{ q }}{% endif %}" class="page-link">&raquo;</a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

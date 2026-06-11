@@ -1,0 +1,212 @@
+{% extends 'catalog/base.html' %}
+{% block title %}Trợ Lý AI - E-Shop Storefront{% endblock %}
+
+{% block extra_head %}
+<style>
+    .chat-wrapper {
+        max-width: 800px;
+        margin: 0 auto;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 600px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .chat-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.02);
+    }
+    .chat-messages {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .chat-bubble {
+        max-width: 75%;
+        padding: 12px 18px;
+        border-radius: 12px;
+        font-size: 0.95rem;
+    }
+    .chat-bubble.assistant {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-primary);
+        align-self: flex-start;
+        border: 1px solid var(--border-color);
+        border-bottom-left-radius: 2px;
+    }
+    .chat-bubble.user {
+        background: var(--accent-gradient);
+        color: white;
+        align-self: flex-end;
+        border-bottom-right-radius: 2px;
+        box-shadow: 0 4px 10px var(--accent-glow);
+    }
+    .chat-products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+        margin-top: 10px;
+    }
+    .chat-product-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        font-size: 0.8rem;
+    }
+    .chat-product-card img {
+        width: 100%;
+        height: 100px;
+        object-fit: cover;
+    }
+    .chat-product-card-body {
+        padding: 8px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+    .chat-product-title {
+        font-weight: 600;
+        margin-bottom: 5px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        height: 2.4em;
+    }
+    .chat-product-price {
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-top: auto;
+    }
+    .chat-footer {
+        padding: 15px 20px;
+        border-top: 1px solid var(--border-color);
+        background: rgba(255, 255, 255, 0.02);
+    }
+    .chat-form {
+        display: flex;
+        gap: 15px;
+    }
+    .chat-input {
+        flex: 1;
+        background: var(--bg-primary);
+        border: 1px solid var(--border-color);
+        color: var(--text-primary);
+        padding: 12px 15px;
+        border-radius: 8px;
+        outline: none;
+    }
+    .chat-input:focus {
+        border-color: var(--accent-color);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2 style="margin-bottom: 25px; text-align: center; font-weight: 800;">Trợ Lý Tư Vấn Sản Phẩm AI</h2>
+
+<div class="chat-wrapper">
+    <div class="chat-header">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:10px; height:10px; border-radius:50%; background:var(--success-color); box-shadow:0 0 8px var(--success-color);"></div>
+            <strong>Trợ Lý AI Shop</strong>
+        </div>
+        <span style="font-size:0.8rem; color:var(--text-secondary);">Model: Sequence LSTM + Graph V1.2</span>
+    </div>
+    
+    <div class="chat-messages" id="chat-messages">
+        <!-- Welcoming bubble -->
+        <div class="chat-bubble assistant">
+            Chào bạn! Tôi là Trợ lý AI. Tôi có thể tư vấn sản phẩm sách, đồ điện tử và thời trang dựa trên nhu cầu của bạn.
+            Bạn hãy thử gõ <strong>"sách nghệ thuật"</strong>, <strong>"thiết bị điện tử"</strong> hoặc <strong>"thời trang nam"</strong> để tôi tìm kiếm nhé!
+        </div>
+    </div>
+    
+    <div class="chat-footer">
+        <form class="chat-form" id="chat-form">
+            <input type="text" id="chat-input" class="chat-input" placeholder="Nhập câu hỏi của bạn ở đây..." autocomplete="off" required>
+            <button type="submit" class="btn-primary" style="padding:0 25px; font-weight:600;">Gửi</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const chatMessages = document.getElementById('chat-messages');
+
+    chatForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const text = chatInput.value.trim();
+        if(!text) return;
+        
+        appendBubble(text, 'user');
+        chatInput.value = '';
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        fetch('{% url "api_chat" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: new URLSearchParams({
+                'message': text
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            appendBubble(data.answer, 'assistant', data.recommended_products);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        })
+        .catch(err => {
+            appendBubble('Đã xảy ra lỗi kết nối với máy chủ AI. Vui lòng thử lại sau!', 'assistant');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+    });
+
+    function appendBubble(text, sender, products = []) {
+        const bubble = document.createElement('div');
+        bubble.className = `chat-bubble ${sender}`;
+        bubble.innerHTML = text;
+
+        if (products && products.length > 0) {
+            const grid = document.createElement('div');
+            grid.className = 'chat-products-grid';
+            
+            products.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'chat-product-card';
+                card.innerHTML = `
+                    <img src="${p.image_url || 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=150'}" alt="${p.name}">
+                    <div class="chat-product-card-body">
+                        <div class="chat-product-title">
+                            <a href="/products/${p.product_id}/" style="color:var(--text-primary); font-weight:600;">${p.name}</a>
+                        </div>
+                        <div class="chat-product-price">${p.price.toLocaleString('vi-VN')} đ</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            bubble.appendChild(grid);
+        }
+
+        chatMessages.appendChild(bubble);
+    }
+</script>
+{% endblock %}

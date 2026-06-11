@@ -1,0 +1,77 @@
+# ==========================================
+# E-Commerce Project Git Ignore Configuration
+# ==========================================
+
+# 1. Project Large Datasets & Machine Learning Checkpoints
+# --------------------------------------------------------
+# Ignore crawled raw products and laptop component datasets (large CSVs)
+data/
+
+# Ignore deep learning LSTM models & weights checkpoint folders
+**/checkpoints/
+**/*.pt
+**/*.pth
+
+# 2. Local Database & SQLite Engine Files
+# ---------------------------------------
+# Ignore the SQLite database to prevent committing local store state/orders
+web/db.sqlite3
+web/db.sqlite3-journal
+web/db.sqlite3-shm
+web/db.sqlite3-wal
+
+# 3. Python Cache, Build & Bytecode Files
+# ---------------------------------------
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+**/*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# 4. Virtual Environments (Local runtimes)
+# ----------------------------------------
+.venv/
+venv/
+ENV/
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# 5. Django Web Static & Media files
+# ----------------------------------
+# Ignore static files collected during collectstatic in production
+web/staticfiles/
+# Ignore user uploaded media files
+web/media/
+
+# 6. Local Environments & Secrets
+# -------------------------------
+# Local environment variables containing sensitive keys/passwords
+web/.env
+web/local_settings.py
+
+# 7. IDE, System & AI Editor configurations
+# -----------------------------------------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.gemini/
+.system_generated/

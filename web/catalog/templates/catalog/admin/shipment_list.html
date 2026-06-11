@@ -1,0 +1,99 @@
+{% extends 'catalog/base.html' %}
+{% block title %}Quản lý vận chuyển - E-Shop Storefront{% endblock %}
+
+{% block content %}
+<h2 style="font-family: var(--font-signifier); font-size: 2.2rem; font-weight: 400; margin-bottom: 10px;">Quản Lý Vận Chuyển</h2>
+<p style="color: var(--text-secondary); margin-bottom: 24px;">Theo dõi tình trạng giao hàng, cập nhật số hiệu vận đơn (Tracking Number) và tiến độ vận chuyển.</p>
+
+<!-- Admin Sub Navigation -->
+<div style="display: flex; gap: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 32px; font-size: 15px;">
+    <a href="{% url 'admin_dashboard' %}" style="font-weight: 600; color: var(--text-secondary);">Tổng quan</a>
+    <a href="{% url 'admin_products' %}" style="font-weight: 600; color: var(--text-secondary);">Sản phẩm</a>
+    <a href="{% url 'admin_orders' %}" style="font-weight: 600; color: var(--text-secondary);">Đơn hàng</a>
+    <a href="{% url 'admin_shipments' %}" style="font-weight: 600; color: var(--color-rust);">Giao hàng</a>
+</div>
+
+<!-- Status Filters -->
+<div style="display: flex; gap: 12px; align-items: center; margin-bottom: 24px; flex-wrap: wrap;">
+    <span style="font-size: 14px; font-weight: 500; color: var(--text-secondary);">Lọc theo trạng thái:</span>
+    <a href="{% url 'admin_shipments' %}" class="badge" style="background: {% if not status_filter %}var(--color-ink){% else %}var(--color-fog){% endif %}; color: {% if not status_filter %}white{% else %}var(--text-secondary){% endif %}; text-transform: none; font-weight: 500;">Tất cả</a>
+    {% for val, label in status_choices %}
+        <a href="{% url 'admin_shipments' %}?status={{ val }}" class="badge {{ val }}" style="text-transform: none; font-weight: 500; {% if status_filter == val %}outline: 2px solid var(--color-ink);{% endif %}">
+            {{ label }}
+        </a>
+    {% endfor %}
+</div>
+
+<!-- Shipments Table -->
+<div style="background: var(--color-pure-white); border: 1px solid var(--border-color); border-radius: var(--radius-cards); padding: 24px; box-shadow: var(--shadow-subtle); overflow-x: auto;">
+    <table class="order-table" style="margin-bottom: 20px;">
+        <thead>
+            <tr>
+                <th>Mã đơn hàng</th>
+                <th>Địa chỉ giao hàng</th>
+                <th>Mã vận đơn (Tracking)</th>
+                <th>Ngày tạo vận đơn</th>
+                <th>Trạng thái giao hàng</th>
+                <th>Cập nhật vận chuyển</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for shipment in page_obj %}
+                <tr>
+                    <td style="font-weight: 700;">#{{ shipment.order_id }}</td>
+                    <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ shipment.address }}</td>
+                    <td style="font-weight: 500; color: var(--color-rust);">
+                        {{ shipment.tracking_number|default:"Chưa cập nhật" }}
+                    </td>
+                    <td>{{ shipment.created_at|date:"d/m/Y H:i" }}</td>
+                    <td>
+                        <span class="badge {{ shipment.status }}">{{ shipment.get_status_display }}</span>
+                    </td>
+                    <td>
+                        <form method="POST" action="{% url 'admin_shipments' %}" style="display: flex; gap: 8px; flex-direction: column;">
+                            {% csrf_token %}
+                            <input type="hidden" name="shipment_id" value="{{ shipment.id }}">
+                            <div style="display: flex; gap: 8px;">
+                                <select name="status" style="padding: 6px 12px; font-size: 13px; border-radius: 6px; border: 1px solid var(--border-color); outline: none; background: white; cursor: pointer;">
+                                    {% for val, label in status_choices %}
+                                        <option value="{{ val }}" {% if shipment.status == val %}selected{% endif %}>{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" class="btn-primary" style="padding: 6px 12px; font-size: 13px; border-radius: 6px;">Cập nhật</button>
+                            </div>
+                            <input type="text" name="tracking_number" placeholder="Số hiệu vận đơn..." value="{{ shipment.tracking_number|default:'' }}" style="padding: 6px 10px; font-size: 12px; border: 1px solid var(--border-color); border-radius: 6px; outline: none;">
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                        <h3>Không tìm thấy vận vận đơn nào!</h3>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}{% if status_filter %}&status={{ status_filter }}{% endif %}" class="page-link">&laquo;</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <span class="page-link active">{{ num }}</span>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a href="?page={{ num }}{% if status_filter %}&status={{ status_filter }}{% endif %}" class="page-link">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{% if status_filter %}&status={{ status_filter }}{% endif %}" class="page-link">&raquo;</a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

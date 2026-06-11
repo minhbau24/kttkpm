@@ -1,0 +1,105 @@
+{% extends 'catalog/base.html' %}
+{% block title %}Tổng quan quản trị - E-Shop Storefront{% endblock %}
+
+{% block content %}
+<h2 style="font-family: var(--font-signifier); font-size: 2.2rem; font-weight: 400; margin-bottom: 10px;">Bảng Điều Khiển Quản Trị</h2>
+<p style="color: var(--text-secondary); margin-bottom: 24px;">Theo dõi hoạt động, quản lý sản phẩm, đơn hàng và vận chuyển toàn hệ thống.</p>
+
+<!-- Admin Sub Navigation -->
+<div style="display: flex; gap: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 32px; font-size: 15px;">
+    <a href="{% url 'admin_dashboard' %}" style="font-weight: 600; color: var(--color-rust);">Tổng quan</a>
+    <a href="{% url 'admin_products' %}" style="font-weight: 600; color: var(--text-secondary);">Sản phẩm</a>
+    <a href="{% url 'admin_orders' %}" style="font-weight: 600; color: var(--text-secondary);">Đơn hàng</a>
+    <a href="{% url 'admin_shipments' %}" style="font-weight: 600; color: var(--text-secondary);">Giao hàng</a>
+</div>
+
+<!-- Stats Grid -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-bottom: 48px;">
+    <div style="background: var(--color-pure-white); border: 1px solid var(--border-color); border-radius: var(--radius-cards); padding: 24px; box-shadow: var(--shadow-subtle);">
+        <div style="font-size: 13px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">Tổng doanh thu</div>
+        <div style="font-family: var(--font-signifier); font-size: 2rem; font-weight: 400; color: var(--color-ink);">{{ total_sales|floatformat:"0" }} đ</div>
+    </div>
+    <div style="background: var(--color-pure-white); border: 1px solid var(--border-color); border-radius: var(--radius-cards); padding: 24px; box-shadow: var(--shadow-subtle);">
+        <div style="font-size: 13px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">Tổng đơn hàng</div>
+        <div style="font-family: var(--font-signifier); font-size: 2rem; font-weight: 400; color: var(--color-ink);">{{ total_orders }} đơn</div>
+    </div>
+    <div style="background: var(--color-pure-white); border: 1px solid var(--border-color); border-radius: var(--radius-cards); padding: 24px; box-shadow: var(--shadow-subtle);">
+        <div style="font-size: 13px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">Tổng sản phẩm</div>
+        <div style="font-family: var(--font-signifier); font-size: 2rem; font-weight: 400; color: var(--color-ink);">{{ total_products }} mã</div>
+    </div>
+    <div style="background: var(--color-pure-white); border: 1px solid var(--border-color); border-radius: var(--radius-cards); padding: 24px; box-shadow: var(--shadow-subtle);">
+        <div style="font-size: 13px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">Vận đơn giao hàng</div>
+        <div style="font-family: var(--font-signifier); font-size: 2rem; font-weight: 400; color: var(--color-ink);">{{ total_shipments }} kiện</div>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+    <!-- Recent Orders -->
+    <div style="background: var(--color-pure-white); border: 1px solid var(--border-color); border-radius: var(--radius-cards); padding: 24px; box-shadow: var(--shadow-subtle);">
+        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+            <span>Đơn hàng mới nhận</span>
+            <a href="{% url 'admin_orders' %}" style="font-size: 13px; color: var(--color-rust); text-decoration: underline;">Xem tất cả</a>
+        </h3>
+        
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <thead>
+                <tr style="border-bottom: 1.5px solid var(--color-ink); text-align: left; color: var(--text-secondary);">
+                    <th style="padding: 10px 5px;">Mã đơn</th>
+                    <th style="padding: 10px 5px;">Khách hàng</th>
+                    <th style="padding: 10px 5px;">Tổng giá</th>
+                    <th style="padding: 10px 5px;">Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in recent_orders %}
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 12px 5px; font-weight: 600;">#{{ order.id }}</td>
+                        <td style="padding: 12px 5px;">{{ order.user.username }}</td>
+                        <td style="padding: 12px 5px; font-weight: 500;">{{ order.total_price|floatformat:"0" }} đ</td>
+                        <td style="padding: 12px 5px;">
+                            <span class="badge {{ order.status }}" style="font-size: 10px; padding: 3px 8px;">{{ order.get_status_display }}</span>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 20px; color: var(--text-secondary);">Chưa có đơn hàng nào.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Recent Products -->
+    <div style="background: var(--color-pure-white); border: 1px solid var(--border-color); border-radius: var(--radius-cards); padding: 24px; box-shadow: var(--shadow-subtle);">
+        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+            <span>Sản phẩm vừa thêm</span>
+            <a href="{% url 'admin_products' %}" style="font-size: 13px; color: var(--color-rust); text-decoration: underline;">Xem tất cả</a>
+        </h3>
+        
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <thead>
+                <tr style="border-bottom: 1.5px solid var(--color-ink); text-align: left; color: var(--text-secondary);">
+                    <th style="padding: 10px 5px;">Mã SP</th>
+                    <th style="padding: 10px 5px;">Tên sản phẩm</th>
+                    <th style="padding: 10px 5px;">Đơn giá</th>
+                    <th style="padding: 10px 5px;">Tồn kho</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prod in recent_products %}
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 12px 5px; font-weight: 600;">#{{ prod.id }}</td>
+                        <td style="padding: 12px 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px;">{{ prod.name }}</td>
+                        <td style="padding: 12px 5px; font-weight: 500;">{{ prod.price|floatformat:"0" }} đ</td>
+                        <td style="padding: 12px 5px;">{{ prod.stock }} chiếc</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 20px; color: var(--text-secondary);">Chưa có sản phẩm nào.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

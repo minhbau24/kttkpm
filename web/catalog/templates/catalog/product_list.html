@@ -1,0 +1,128 @@
+{% extends 'catalog/base.html' %}
+{% block title %}Cửa Hàng - E-Shop Microservices Storefront{% endblock %}
+
+{% block content %}
+<div class="catalog-layout">
+    <!-- Sidebar Filter -->
+    <aside class="sidebar">
+        <h3>Danh Mục</h3>
+        <ul class="category-list">
+            <li class="category-item {% if not active_category %}active{% endif %}">
+                <a href="{% url 'store' %}{% if q %}?q={{ q }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}">Tất Cả Sản Phẩm</a>
+            </li>
+            {% for cat in categories %}
+                <li class="category-item {% if active_category.id == cat.id %}active{% endif %}">
+                    <a href="{% url 'store' %}?category={{ cat.slug }}{% if q %}&q={{ q }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}">
+                        {{ cat.name }}
+                    </a>
+                </li>
+                {% if cat.id in category_path and cat.children.all %}
+                    <ul class="category-list" style="padding-left: 16px; margin: 4px 0 8px 0; border-left: 1px solid var(--border-color); gap: 4px;">
+                        {% for subcat in cat.children.all %}
+                            <li class="category-item {% if active_category.id == subcat.id %}active{% endif %}">
+                                <a href="{% url 'store' %}?category={{ subcat.slug }}{% if q %}&q={{ q }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}" style="font-size: 14px; padding: 6px 10px;">
+                                    {{ subcat.name }}
+                                </a>
+                            </li>
+                            {% if subcat.id in category_path and subcat.children.all %}
+                                <ul class="category-list" style="padding-left: 16px; margin: 4px 0 4px 0; border-left: 1px dashed var(--border-color); gap: 2px;">
+                                    {% for subsubcat in subcat.children.all %}
+                                        <li class="category-item {% if active_category.id == subsubcat.id %}active{% endif %}">
+                                            <a href="{% url 'store' %}?category={{ subsubcat.slug }}{% if q %}&q={{ q }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}" style="font-size: 13px; padding: 4px 8px; color: var(--text-muted);">
+                                                {{ subsubcat.name }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </aside>
+
+    <!-- Main Content Area -->
+    <section>
+        <!-- Search and Sort -->
+        <div class="catalog-header">
+            <form method="GET" action="{% url 'store' %}" class="search-box">
+                {% if active_category %}
+                    <input type="hidden" name="category" value="{{ active_category.slug }}">
+                {% endif %}
+                {% if sort %}
+                    <input type="hidden" name="sort" value="{{ sort }}">
+                {% endif %}
+                <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." value="{{ q|default:'' }}">
+            </form>
+
+            <div class="sort-box">
+                <select onchange="location = this.value;">
+                    <option value="?{% if active_category %}category={{ active_category.slug }}&{% endif %}{% if q %}q={{ q }}&{% endif %}sort=" {% if not sort %}selected{% endif %}>Mới nhất</option>
+                    <option value="?{% if active_category %}category={{ active_category.slug }}&{% endif %}{% if q %}q={{ q }}&{% endif %}sort=price_asc" {% if sort == 'price_asc' %}selected{% endif %}>Giá: Thấp đến Cao</option>
+                    <option value="?{% if active_category %}category={{ active_category.slug }}&{% endif %}{% if q %}q={{ q }}&{% endif %}sort=price_desc" {% if sort == 'price_desc' %}selected{% endif %}>Giá: Cao đến Thấp</option>
+                    <option value="?{% if active_category %}category={{ active_category.slug }}&{% endif %}{% if q %}q={{ q }}&{% endif %}sort=rating" {% if sort == 'rating' %}selected{% endif %}>Đánh giá cao nhất</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Grid -->
+        {% if page_obj %}
+            <div class="product-grid">
+                {% for prod in page_obj %}
+                    <div class="product-card">
+                        <div class="product-image">
+                            {% if prod.image_url %}
+                                <img src="{{ prod.image_url }}" alt="{{ prod.name }}">
+                            {% else %}
+                                <div style="display:flex; justify-content:center; align-items:center; height:100%; color:var(--text-secondary);">Không có hình ảnh</div>
+                            {% endif %}
+                            
+                            {% if prod.category %}
+                                <span class="product-badge">{{ prod.category.name }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="product-info">
+                            <h4 class="product-title">
+                                <a href="{% url 'product_detail' prod.id %}">{{ prod.name }}</a>
+                            </h4>
+                            <div class="product-meta">
+                                <span class="product-price">{{ prod.price|floatformat:"0" }} đ</span>
+                                <span class="product-rating">
+                                    ★ {{ prod.rating_average|floatformat:1 }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if page_obj.has_other_pages %}
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}{% if active_category %}&category={{ active_category.slug }}{% endif %}{% if q %}&q={{ q }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}" class="page-link">&laquo;</a>
+                    {% endif %}
+
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <span class="page-link active">{{ num }}</span>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            <a href="?page={{ num }}{% if active_category %}&category={{ active_category.slug }}{% endif %}{% if q %}&q={{ q }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}" class="page-link">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}{% if active_category %}&category={{ active_category.slug }}{% endif %}{% if q %}&q={{ q }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}" class="page-link">&raquo;</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% else %}
+            <div style="text-align:center; padding:50px 0; color:var(--text-secondary);">
+                <h3>Không tìm thấy sản phẩm nào!</h3>
+                <p>Vui lòng thử tìm kiếm với từ khóa khác.</p>
+            </div>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

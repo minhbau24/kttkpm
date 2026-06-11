@@ -1,0 +1,41 @@
+{% extends 'catalog/base.html' %}
+{% block title %}Cập Nhật Vận Đơn #{{ order.id }} - E-Shop Storefront{% endblock %}
+
+{% block content %}
+<div class="form-card" style="max-width: 500px;">
+    <h2>Cập Nhật Trạng Thái Giao Hàng</h2>
+    <h4 style="text-align:center; color:var(--text-secondary); margin-bottom:25px;">Đơn Hàng #{{ order.id }}</h4>
+
+    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border-color); border-radius:8px; padding:20px; margin-bottom:25px; font-size:0.95rem;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+            <span style="color:var(--text-secondary);">Mã vận đơn:</span>
+            <strong style="font-size:0.85rem; word-break:break-all;">{{ shipment.tracking_number }}</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+            <span style="color:var(--text-secondary);">Trạng thái hiện tại:</span>
+            <span class="badge {{ shipment.status }}">{{ shipment.get_status_display }}</span>
+        </div>
+        <div style="margin-top:10px; border-top:1px solid var(--border-color); padding-top:10px;">
+            <span style="color:var(--text-secondary); display:block; margin-bottom:5px;">Địa chỉ giao hàng:</span>
+            <p>{{ shipment.address }}</p>
+        </div>
+    </div>
+
+    <form method="POST" action="{% url 'update_shipping_status' order.id %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="status">Chọn trạng thái mới</label>
+            <select name="status" id="status" class="form-control">
+                <option value="processing" {% if shipment.status == 'processing' %}selected{% endif %}>Chờ chuẩn bị (Processing)</option>
+                <option value="shipping" {% if shipment.status == 'shipping' %}selected{% endif %}>Đang giao hàng (Shipping)</option>
+                <option value="delivered" {% if shipment.status == 'delivered' %}selected{% endif %}>Đã giao hàng (Delivered)</option>
+            </select>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%; padding:12px; font-weight:600; margin-top:10px;">Xác Nhận Cập Nhật</button>
+    </form>
+    
+    <div style="text-align:center; margin-top:20px;">
+        <a href="{% url 'order_detail' order.id %}" style="font-size:0.9rem; color:var(--text-secondary); text-decoration:underline;">Quay lại chi tiết đơn hàng</a>
+    </div>
+</div>
+{% endblock %}

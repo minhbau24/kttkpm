@@ -1,0 +1,204 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}E-Commerce Microservices Storefront{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'catalog/css/style.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="{% url 'home' %}" class="logo">E-SHOP SOAD</a>
+            
+            <ul class="nav-links">
+                <li><a href="{% url 'store' %}">Cửa Hàng</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'recommendations' %}">Gợi Ý AI</a></li>
+                    <li><a href="{% url 'order_history' %}">Đơn Hàng</a></li>
+                    <li><a href="{% url 'cart' %}" class="nav-link">Giỏ Hàng <span style="background:#ef4444; color:white; border-radius:50%; padding:2px 7px; font-size:0.75rem; font-weight:700;">{{ user.cart.items_count|default:0 }}</span></a></li>
+                    {% if user.role == 'admin' or user.role == 'staff' %}
+                        <li><a href="{% url 'admin_dashboard' %}" style="font-weight:600; color:var(--color-rust);">Quản Trị</a></li>
+                        <li><span class="badge staff" style="margin: 0; background:rgba(139, 92, 246, 0.2); color:#a78bfa; font-size:0.75rem;">{{ user.get_role_display }}</span></li>
+                    {% endif %}
+                    <li>Xin chào, <strong>{{ user.username }}</strong></li>
+                    <li><a href="{% url 'logout' %}" class="btn-secondary" style="padding: 6px 12px; font-size: 0.85rem; font-weight: 500;">Đăng xuất</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Đăng nhập</a></li>
+                    <li><a href="{% url 'register' %}" class="btn-primary" style="padding: 8px 16px; font-size: 0.85rem; font-weight: 500;">Đăng ký</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Messages -->
+        {% if messages %}
+            <div class="messages-container">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 E-Shop Microservices. Bài tập môn học SoAD. GVHD: Trần Đình Quế.</p>
+        </div>
+    </footer>
+
+    {% if user.is_authenticated %}
+    <!-- Floating Chat Widget -->
+    <div class="chat-widget" id="chat-widget">
+        <button class="chat-trigger-btn" id="chat-trigger-btn" onclick="toggleChatPopup()" title="Trợ lý AI">
+            💬
+        </button>
+        <div class="chat-popup" id="chat-popup">
+            <div class="chat-widget-header">
+                <div class="chat-widget-title">
+                    <div style="width: 10px; height: 10px; border-radius: 50%; background: var(--success-color); box-shadow: 0 0 8px var(--success-color);"></div>
+                    <strong>Trợ Lý AI Shop</strong>
+                </div>
+                <button class="chat-widget-close" onclick="toggleChatPopup()">&times;</button>
+            </div>
+            
+            <div class="chat-widget-messages" id="chat-widget-messages">
+                <!-- Welcoming bubble -->
+                <div class="chat-widget-bubble assistant">
+                    Chào bạn! Tôi là Trợ lý AI. Tôi có thể tư vấn sản phẩm sách, đồ điện tử và thời trang dựa trên nhu cầu của bạn.
+                    Bạn hãy thử gõ <strong>"sách nghệ thuật"</strong>, <strong>"thiết bị điện tử"</strong> hoặc <strong>"thời trang nam"</strong> để tôi tìm kiếm nhé!
+                </div>
+            </div>
+            
+            <div class="chat-widget-footer">
+                <form class="chat-widget-form" id="chat-widget-form">
+                    <input type="text" id="chat-widget-input" class="chat-widget-input" placeholder="Nhập câu hỏi của bạn..." autocomplete="off" required>
+                    <button type="submit" class="btn-primary" style="padding: 0 15px; font-size: 0.85rem; font-weight: 600; border-radius: 6px;">Gửi</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleChatPopup(event) {
+            if (event) {
+                event.preventDefault();
+            }
+            const popup = document.getElementById('chat-popup');
+            if (popup) {
+                popup.classList.toggle('open');
+                if (popup.classList.contains('open')) {
+                    const messagesContainer = document.getElementById('chat-widget-messages');
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    document.getElementById('chat-widget-input').focus();
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatWidgetForm = document.getElementById('chat-widget-form');
+            const chatWidgetInput = document.getElementById('chat-widget-input');
+            const chatWidgetMessages = document.getElementById('chat-widget-messages');
+
+            // Load Chat History
+            fetch('/api/ai/chat/history/')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.history && data.history.length > 0) {
+                        chatWidgetMessages.innerHTML = ''; // Clear welcoming bubble if history exists
+                        data.history.forEach(msg => {
+                            appendWidgetBubble(msg.message, msg.sender, msg.products);
+                        });
+                        chatWidgetMessages.scrollTop = chatWidgetMessages.scrollHeight;
+                    }
+                })
+                .catch(err => console.error('Error loading chat history:', err));
+
+            // Form Submit handler
+            if (chatWidgetForm) {
+                chatWidgetForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const text = chatWidgetInput.value.trim();
+                    if (!text) return;
+
+                    appendWidgetBubble(text, 'user');
+                    chatWidgetInput.value = '';
+                    chatWidgetMessages.scrollTop = chatWidgetMessages.scrollHeight;
+
+                    fetch('/api/ai/chat/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: new URLSearchParams({
+                            'message': text
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        appendWidgetBubble(data.answer, 'assistant', data.recommended_products);
+                        chatWidgetMessages.scrollTop = chatWidgetMessages.scrollHeight;
+                    })
+                    .catch(err => {
+                        appendWidgetBubble('Đã xảy ra lỗi kết nối với máy chủ AI. Vui lòng thử lại sau!', 'assistant');
+                        chatWidgetMessages.scrollTop = chatWidgetMessages.scrollHeight;
+                    });
+                });
+            }
+
+            function appendWidgetBubble(text, sender, products = []) {
+                const bubble = document.createElement('div');
+                bubble.className = `chat-widget-bubble ${sender}`;
+                bubble.innerHTML = text;
+
+                if (products && products.length > 0) {
+                    const grid = document.createElement('div');
+                    grid.style.display = 'grid';
+                    grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(100px, 1fr))';
+                    grid.style.gap = '8px';
+                    grid.style.marginTop = '10px';
+                    
+                    products.forEach(p => {
+                        const card = document.createElement('div');
+                        card.style.background = 'rgba(255, 255, 255, 0.03)';
+                        card.style.border = '1px solid var(--border-color)';
+                        card.style.borderRadius = '6px';
+                        card.style.overflow = 'hidden';
+                        card.style.display = 'flex';
+                        card.style.flexDirection = 'column';
+                        card.style.fontSize = '0.7rem';
+                        
+                        card.innerHTML = `
+                            <img src="${p.image_url || 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=100'}" alt="${p.name}" style="width: 100%; height: 60px; object-fit: cover;">
+                            <div style="padding: 4px; display: flex; flex-direction: column; flex: 1;">
+                                <div style="font-weight: 600; margin-bottom: 2px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 2.4em; line-height: 1.2;">
+                                    <a href="/products/${p.product_id}/" style="color:var(--text-primary); text-decoration: none;">${p.name}</a>
+                                </div>
+                                <div style="font-weight: 700; color: var(--text-primary); margin-top: auto; font-size: 0.7rem;">${p.price.toLocaleString('vi-VN')} đ</div>
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                    });
+                    bubble.appendChild(grid);
+                }
+
+                chatWidgetMessages.appendChild(bubble);
+            }
+        });
+    </script>
+    {% endif %}
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

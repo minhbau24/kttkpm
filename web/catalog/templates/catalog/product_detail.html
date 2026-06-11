@@ -1,0 +1,151 @@
+{% extends 'catalog/base.html' %}
+{% block title %}{{ product.name }} - E-Shop Storefront{% endblock %}
+
+{% block content %}
+<div class="product-detail-layout">
+    <!-- Image Box -->
+    <div class="detail-image-box">
+        {% if product.image_url %}
+            <img src="{{ product.image_url }}" alt="{{ product.name }}">
+        {% else %}
+            <span style="color:var(--text-secondary);">Không có hình ảnh</span>
+        {% endif %}
+    </div>
+
+    <!-- Info Box -->
+    <div class="detail-info-box">
+        <h1>{{ product.name }}</h1>
+        <div class="detail-rating">
+            <span style="color:var(--warning-color); font-weight:700;">★ {{ product.rating_average|floatformat:1 }}</span>
+            <span style="color:var(--text-secondary); margin-left: 10px;">| Đánh giá trung bình</span>
+        </div>
+        <div class="detail-price">
+            {{ product.price|floatformat:"0" }} đ
+        </div>
+
+        <h3>Thông số kỹ thuật</h3>
+        <table class="spec-table">
+            <tbody>
+                {% if product.book_details %}
+                    <tr>
+                        <td class="label">Loại sản phẩm</td>
+                        <td>Sách / Ấn phẩm</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Tác giả</td>
+                        <td>{{ product.book_details.author }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Nhà xuất bản</td>
+                        <td>{{ product.book_details.publisher }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Mã ISBN</td>
+                        <td>{{ product.book_details.isbn }}</td>
+                    </tr>
+                {% elif product.electronics_details %}
+                    <tr>
+                        <td class="label">Loại sản phẩm</td>
+                        <td>Thiết bị Điện tử</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Thương hiệu</td>
+                        <td>{{ product.electronics_details.brand }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Thời hạn bảo hành</td>
+                        <td>{{ product.electronics_details.warranty }} tháng</td>
+                    </tr>
+                {% elif product.fashion_details %}
+                    <tr>
+                        <td class="label">Loại sản phẩm</td>
+                        <td>Thời trang / Trang phục</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Kích cỡ (Size)</td>
+                        <td>{{ product.fashion_details.size }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Màu sắc</td>
+                        <td>{{ product.fashion_details.color }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td class="label">Loại sản phẩm</td>
+                        <td>Tiêu chuẩn</td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <td class="label">Tình trạng hàng</td>
+                    <td>
+                        {% if product.stock > 0 %}
+                            <span style="color:var(--success-color); font-weight:600;">Còn hàng ({{ product.stock }} sản phẩm)</span>
+                        {% else %}
+                            <span style="color:var(--danger-color); font-weight:600;">Hết hàng</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="detail-desc">
+            <h4 style="margin-bottom:10px; color:var(--text-primary);">Mô tả sản phẩm:</h4>
+            <p>{{ product.description|linebreaksbr }}</p>
+        </div>
+
+        {% if product.stock > 0 %}
+            <form method="POST" action="{% url 'cart_add' product.id %}" class="cart-action-form">
+                {% csrf_token %}
+                <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}" class="quantity-input">
+                <button type="submit" class="btn-primary">Thêm Vào Giỏ Hàng</button>
+            </form>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Recommendations section -->
+{% if recommendations %}
+    <div style="margin-top: 60px;">
+        <h3 style="margin-bottom:20px; font-weight:800;">Sản phẩm liên quan</h3>
+        <div class="product-grid">
+            {% for prod in recommendations %}
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="{{ prod.image_url }}" alt="{{ prod.name }}">
+                    </div>
+                    <div class="product-info">
+                        <h4 class="product-title"><a href="{% url 'product_detail' prod.id %}">{{ prod.name }}</a></h4>
+                        <div class="product-meta">
+                            <span class="product-price">{{ prod.price|floatformat:"0" }} đ</span>
+                            <span class="product-rating">★ {{ prod.rating_average|floatformat:1 }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+{% if user.is_authenticated %}
+<script>
+    // Post user View event behavior logs to API
+    fetch('{% url "api_log_event" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: new URLSearchParams({
+            'product_id': '{{ product.id }}',
+            'action_type': 'View',
+            'session_id': 'sess_{{ user.id }}_' + new Date().getDate()
+        })
+    })
+    .then(res => res.json())
+    .then(data => console.log('Behavior event logged:', data))
+    .catch(err => console.error('Failed to log event:', err));
+</script>
+{% endif %}
+{% endblock %}

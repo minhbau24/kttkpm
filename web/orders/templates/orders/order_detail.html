@@ -1,0 +1,118 @@
+{% extends 'catalog/base.html' %}
+{% block title %}Chi Tiết Đơn Hàng #{{ order.id }} - E-Shop Storefront{% endblock %}
+
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+    <h2 style="font-weight:800;">Chi Tiết Đơn Hàng #{{ order.id }}</h2>
+    <a href="{% url 'order_history' %}" class="btn-secondary" style="font-size:0.9rem;">Quay lại lịch sử</a>
+</div>
+
+<!-- Order Tracking Timeline -->
+<div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:var(--border-radius); padding:20px 30px; margin-bottom:30px;">
+    <h3 style="margin-bottom:10px; font-weight:700;">Hành Trình Đơn Hàng</h3>
+    
+    <div class="tracking-timeline">
+        <div class="timeline-step active">
+            <div class="step-icon">1</div>
+            <div class="step-label">Đặt Hàng</div>
+        </div>
+        <div class="timeline-step {% if order.status == 'paid' or order.status == 'shipping' or order.status == 'completed' %}active{% endif %}">
+            <div class="step-icon">2</div>
+            <div class="step-label">Đã Thanh Toán</div>
+        </div>
+        <div class="timeline-step {% if order.status == 'shipping' or order.status == 'completed' %}active{% endif %}">
+            <div class="step-icon">3</div>
+            <div class="step-label">Đang Giao Hàng</div>
+        </div>
+        <div class="timeline-step {% if order.status == 'completed' %}active{% endif %}">
+            <div class="step-icon">4</div>
+            <div class="step-label">Đã Giao</div>
+        </div>
+    </div>
+</div>
+
+<div class="product-detail-layout" style="grid-template-columns: 1fr 350px; gap:30px;">
+    <!-- Items List -->
+    <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:var(--border-radius); padding:20px; height:fit-content;">
+        <h3 style="margin-bottom:15px; font-weight:700; border-bottom:1px solid var(--border-color); padding-bottom:10px;">Danh Sách Sản Phẩm</h3>
+        <table class="order-table" style="margin-bottom:0;">
+            <thead>
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Đơn giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order.items.all %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'product_detail' item.product_id %}" style="font-weight:600;">{{ item.product.name }}</a>
+                            <div style="font-size:0.75rem; color:var(--text-secondary);">Mã sản phẩm: #{{ item.product_id }}</div>
+                        </td>
+                        <td>{{ item.price_at_order|floatformat:"0" }} đ</td>
+                        <td>{{ item.quantity }}</td>
+                        <td style="font-weight:700;">{{ item.subtotal|floatformat:"0" }} đ</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Metadata Sidebar -->
+    <div style="display:flex; flex-direction:column; gap:30px;">
+        <!-- Summary Card -->
+        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:var(--border-radius); padding:20px;">
+            <h3 style="margin-bottom:15px; font-weight:700; border-bottom:1px solid var(--border-color); padding-bottom:10px;">Thanh Toán</h3>
+            <div style="display:flex; flex-direction:column; gap:10px; font-size:0.9rem;">
+                <div style="display:flex; justify-content:space-between;">
+                    <span style="color:var(--text-secondary);">Trạng thái đơn:</span>
+                    <span class="badge {{ order.status }}">{{ order.get_status_display }}</span>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                    <span style="color:var(--text-secondary);">Thanh toán:</span>
+                    <span class="badge {% if order.payment %}{{ order.payment.status }}{% else %}pending{% endif %}">
+                        {% if order.payment %}{{ order.payment.get_status_display }}{% else %}Chưa thanh toán{% endif %}
+                    </span>
+                </div>
+                <div style="display:flex; justify-content:space-between; border-top:1px solid var(--border-color); padding-top:10px; font-weight:700;">
+                    <span>Tổng tiền:</span>
+                    <span style="color:var(--accent-color); font-size:1.2rem;">{{ order.total_price|floatformat:"0" }} đ</span>
+                </div>
+            </div>
+            
+            {% if order.status == 'pending' %}
+                <a href="{% url 'order_payment_page' order.id %}" class="btn-primary" style="display:block; text-align:center; margin-top:20px; padding:10px;">Thanh Toán Ngay</a>
+            {% endif %}
+        </div>
+
+        <!-- Shipping Card -->
+        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:var(--border-radius); padding:20px;">
+            <h3 style="margin-bottom:15px; font-weight:700; border-bottom:1px solid var(--border-color); padding-bottom:10px;">Vận Chuyển</h3>
+            <div style="display:flex; flex-direction:column; gap:10px; font-size:0.9rem;">
+                {% if order.shipment %}
+                    <div style="display:flex; justify-content:space-between;">
+                        <span style="color:var(--text-secondary);">Trạng thái giao:</span>
+                        <span class="badge {{ order.shipment.status }}">{{ order.shipment.get_status_display }}</span>
+                    </div>
+                    <div>
+                        <span style="color:var(--text-secondary); display:block; margin-bottom:5px;">Mã vận đơn:</span>
+                        <strong style="color:var(--text-primary); font-size:0.85rem; word-break:break-all;">{{ order.shipment.tracking_number }}</strong>
+                    </div>
+                    <div>
+                        <span style="color:var(--text-secondary); display:block; margin-bottom:5px;">Địa chỉ nhận:</span>
+                        <span style="color:var(--text-primary);">{{ order.shipment.address }}</span>
+                    </div>
+                    
+                    {% if user.role == 'admin' or user.role == 'staff' %}
+                        <a href="{% url 'update_shipping_status' order.id %}" class="btn-secondary" style="display:block; text-align:center; margin-top:15px; padding:8px; font-size:0.8rem; font-weight:600;">Cập Nhật Vận Đơn (Staff)</a>
+                    {% endif %}
+                {% else %}
+                    <p style="color:var(--text-secondary); font-style:italic;">Chờ thanh toán để chuẩn bị vận chuyển.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

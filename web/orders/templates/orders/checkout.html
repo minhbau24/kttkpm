@@ -1,0 +1,47 @@
+{% extends 'catalog/base.html' %}
+{% block title %}Đặt Hàng - E-Shop Storefront{% endblock %}
+
+{% block content %}
+<h2 style="margin-bottom:30px; font-weight:800;">Thông Tin Đặt Hàng</h2>
+
+<div class="product-detail-layout" style="grid-template-columns: 1fr 400px; gap: 30px;">
+    <!-- Address Input Form -->
+    <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:var(--border-radius); padding:30px; height:fit-content;">
+        <h3 style="margin-bottom:20px; font-weight:700;">Địa Chỉ Nhận Hàng</h3>
+        <form method="POST" action="{% url 'checkout' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="address">Địa chỉ chi tiết</label>
+                <textarea name="address" id="address" rows="4" class="form-control" placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố..." required></textarea>
+            </div>
+            <button type="submit" class="btn-primary" style="width:100%; padding:14px; font-weight:600; margin-top:20px;">Xác Nhận Đặt Hàng</button>
+        </form>
+    </div>
+
+    <!-- Order Summary Sidebar -->
+    <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:var(--border-radius); padding:20px; height:fit-content;">
+        <h3 style="margin-bottom:15px; font-weight:700; border-bottom:1px solid var(--border-color); padding-bottom:10px;">Tóm Tắt Đơn Hàng</h3>
+        
+        <div style="display:flex; flex-direction:column; gap:15px; margin-bottom:20px;">
+            {% for item in cart.items.all %}
+                <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.9rem;">
+                    <span style="flex:1; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; padding-right:10px;">
+                        {{ item.product.name }}
+                    </span>
+                    <span style="color:var(--text-secondary); white-space:nowrap; padding: 0 5px;">
+                        x{{ item.quantity }}
+                    </span>
+                    <span style="font-weight:600; text-align:right; min-width:90px; white-space:nowrap;">
+                        {{ item.subtotal|floatformat:"0" }} đ
+                    </span>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div style="border-top:1px solid var(--border-color); padding-top:15px; display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight:700; color:var(--text-secondary);">Tổng cộng:</span>
+            <span style="font-size:1.3rem; font-weight:800; color:var(--accent-color);">{{ cart.total_price|floatformat:"0" }} đ</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

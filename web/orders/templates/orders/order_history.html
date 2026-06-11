@@ -1,0 +1,55 @@
+{% extends 'catalog/base.html' %}
+{% block title %}Lịch Sử Đơn Hàng - E-Shop Storefront{% endblock %}
+
+{% block content %}
+<h2 style="margin-bottom:30px; font-weight:800;">Lịch Sử Đơn Hàng Của Bạn</h2>
+
+{% if orders %}
+    <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:var(--border-radius); padding:20px; overflow-x:auto;">
+        <table class="order-table">
+            <thead>
+                <tr>
+                    <th>Mã đơn</th>
+                    <th>Ngày đặt</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái đơn hàng</th>
+                    <th>Thanh toán</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td style="font-weight:700;">#{{ order.id }}</td>
+                        <td>{{ order.created_at|date:"d/m/Y H:i" }}</td>
+                        <td style="font-weight:600;">{{ order.total_price|floatformat:"0" }} đ</td>
+                        <td>
+                            <span class="badge {{ order.status }}">{{ order.get_status_display }}</span>
+                        </td>
+                        <td>
+                            {% if order.payment %}
+                                <span class="badge {{ order.payment.status }}">{{ order.payment.get_status_display }}</span>
+                            {% else %}
+                                <span class="badge pending">Pending</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div style="display:flex; gap:10px;">
+                                <a href="{% url 'order_detail' order.id %}" class="btn-secondary" style="padding: 6px 12px; font-size: 0.8rem; font-weight:500;">Chi tiết</a>
+                                {% if order.status == 'pending' %}
+                                    <a href="{% url 'order_payment_page' order.id %}" class="btn-primary" style="padding: 6px 12px; font-size: 0.8rem; font-weight:500; box-shadow:none;">Thanh toán</a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div style="text-align:center; padding:60px 0; background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:var(--border-radius);">
+        <h3 style="margin-bottom:15px; color:var(--text-secondary);">Bạn chưa đặt đơn hàng nào!</h3>
+        <a href="{% url 'store' %}" class="btn-primary">Quay lại mua sắm</a>
+    </div>
+{% endif %}
+{% endblock %}

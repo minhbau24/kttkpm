@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ecom_web_app
+    ports:
+      - "8000:8000"
+    volumes:
+      - db_data:/app/web_db
+    environment:
+      - DEBUG=False
+      - DATABASE_PATH=/app/web_db/db.sqlite3
+      - KMP_DUPLICATE_LIB_OK=TRUE
+    restart: always
+
+volumes:
+  db_data:

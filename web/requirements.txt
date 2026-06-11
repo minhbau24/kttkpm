@@ -1,0 +1,13 @@
+Django>=4.2,<4.3
+djangorestframework
+djangorestframework-simplejwt
+django-cors-headers
+numpy
+sentence-transformers
+gunicorn
+python-dotenv
+pillow
+requests
+scikit-learn
+scipy
+joblib

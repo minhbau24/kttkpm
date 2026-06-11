@@ -1,0 +1,20 @@
+{% extends 'catalog/base.html' %}
+{% block title %}Xác nhận xóa sản phẩm - E-Shop Storefront{% endblock %}
+
+{% block content %}
+<div class="form-card" style="max-width: 480px; padding: 32px; text-align: center;">
+    <div style="font-size: 3rem; margin-bottom: 16px; color: var(--danger-color);">⚠️</div>
+    <h2 style="font-family: var(--font-signifier); font-size: 1.8rem; font-weight: 400; margin-bottom: 12px;">Xác Nhận Xóa</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 24px; font-size: 15px; line-height: 1.5;">
+        Bạn có chắc chắn muốn xóa sản phẩm <strong>"{{ product.name }}"</strong> (Mã SP: #{{ product.id }})? Hành động này sẽ xóa vĩnh viễn sản phẩm khỏi hệ thống.
+    </p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div style="display: flex; gap: 12px; justify-content: center;">
+            <a href="{% url 'admin_products' %}" class="btn-secondary" style="padding: 10px 24px;">Hủy</a>
+            <button type="submit" class="btn-primary" style="background: var(--danger-color); padding: 10px 24px;">Xóa Vĩnh Viễn</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
