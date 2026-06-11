@@ -1,0 +1,39 @@
+﻿id,customer_id,product_id,rating,title,content,status,thank_count,comment_count,images,seller_id,seller_name,delivery_rating
+19509998,17581565,161844744,5,Cực kì hài lòng,Chưa dùng nhưng mọi thứ cả ship siêu tốc đều ok,approved,0,1,"[{'id': 4281154, 'full_path': 'https://salt.tikicdn.com/ts/review/23/55/4b/f813af9a2934a74e5a65e0e686f47507.jpg', 'status': 'approved'}]",1892,Binaishop,"[{'question': 'Thời gian giao hàng?', 'option': 'Giao đúng hẹn'}, {'question': 'Thái độ của shipper?', 'option': 'Lịch sự'}, {'question': 'Giờ giao hàng?', 'option': 'Có hẹn giờ trước'}, {'question': 'Cách đóng gói sản phẩm?', 'option': 'Cẩn thận'}]"
+15310950,13931579,161844744,5,Cực kì hài lòng,Sản phẩm rất ok…Cảm ơn shop và Tiki đã ho tro,approved,0,0,"[{'id': 3205695, 'full_path': 'https://salt.tikicdn.com/ts/review/47/79/bc/155c41e937be4cc145a38cf657d6d30a.jpg', 'status': 'approved'}, {'id': 3205696, 'full_path': 'https://salt.tikicdn.com/ts/review/d7/27/e3/596c4c75b84ecb5a69d5f24f1929f406.jpg', 'status': 'approved'}]",1892,Binaishop,[]
+19033251,7326574,74309855,5,Cực kì hài lòng,"Loa cực kỳ tốt đã mua cái thứ 4 cho Công ty
+Loại Model 410 giá tốt, dùng qua cổng USB/
+Loại model 510 thì có kết nối không dây tuy nhiên đắt hơn khá nhiều.
+Giao hàng đi tỉnh trong vòng 2 ngày rất nhanh.
+Bên người bán xuất hóa đơn điện tử cho công ty bên mình nhanh chóng.
+Chất lượng 5 sao",approved,0,1,[],160211,Vinameeting,[]
+20101078,8118569,74309855,5,Cực kì hài lòng,"Sản phẩm tốt, chất lượng đảm bảo",approved,0,1,[],160211,Vinameeting,[]
+18883242,5704043,74309855,5,Cực kì hài lòng,"Hàng đúng mô tả, xài tốt
+Shop hỗ trợ nhanh chóng
+Xuất hóa đơn trong ngày",approved,0,1,"[{'id': 4136803, 'full_path': 'https://salt.tikicdn.com/ts/review/a4/8c/29/d79893cea32309c984f84e6dfdb458cd.jpg', 'status': 'approved'}, {'id': 4136804, 'full_path': 'https://salt.tikicdn.com/ts/review/25/cf/31/55626a5c2996f696ddf7288a2d003feb.jpg', 'status': 'approved'}]",160211,Vinameeting,[]
+14723775,6607831,74309855,1,Rất không hài lòng,"Sản phẩm tốt, nhưng rất bức xúc về hóa đơn VAT, hóa đơn đợi hơn 3 tháng đã nhờ nhân viên tiki hỗ trợ 2 lần mà hiện tại vẫn chưa có hóa đơn. Thật sự rất bức xúc về cách làm việc không chuyên nghiệp.",approved,0,1,[],160211,Vinameeting,[]
+19815428,342154,74309855,5,Cực kì hài lòng,Xịn,approved,0,2,[],160211,Vinameeting,"[{'question': 'Thời gian giao hàng?', 'option': 'Giao đúng hẹn'}, {'question': 'Thái độ của shipper?', 'option': 'Lịch sự'}, {'question': 'Giờ giao hàng?', 'option': 'Có hẹn giờ trước'}, {'question': 'Cách đóng gói sản phẩm?', 'option': 'Cẩn thận'}]"
+17123868,5979122,74309855,5,Cực kì hài lòng,"giao hàng nhanh, chất lượng tốt, dịch vụ chăm sóc khách hàng nhiệt tình và chu đáo, xuất hóa đơn vat cũng nhanh và chính xác. hài lòng!",approved,0,1,[],160211,Vinameeting,[]
+18959579,10601908,74309855,5,Cực kì hài lòng,Loa hội nghị xài rất tốt. Đáng mua. Dịch vụ hỗ trợ nhiệt tình,approved,0,2,[],160211,Vinameeting,[]
+19394978,10919177,74309855,5,Cực kì hài lòng,Ok,approved,0,1,"[{'id': 4256704, 'full_path': 'https://salt.tikicdn.com/ts/review/f2/aa/3d/4e72d1199e8cd652127bd264c60453b7.jpg', 'status': 'approved'}]",160211,Vinameeting,[]
+19077870,15384415,74309855,5,Cực kì hài lòng,"Nhân viên rất nhiệt tình hỗ trợ, sản phẩm okie",approved,0,1,[],160211,Vinameeting,"[{'question': 'Thời gian giao hàng?', 'option': 'Giao đúng hẹn'}, {'question': 'Thái độ của shipper?', 'option': 'Lịch sự'}, {'question': 'Giờ giao hàng?', 'option': 'Có hẹn giờ trước'}, {'question': 'Cách đóng gói sản phẩm?', 'option': 'Cẩn thận'}]"
+17953797,19616752,74309855,5,Cực kì hài lòng,"loa ok tốt, chỉ tiếc là ko để ý kỹ mã để mua nên mã này ko có kết nối bluetooth",approved,0,1,[],160211,Vinameeting,[]
+19033239,247833,74309855,5,Cực kì hài lòng,,approved,0,1,[],160211,Vinameeting,[]
+18367051,6844844,74309855,5,Cực kì hài lòng,,approved,0,0,[],160211,Vinameeting,[]
+17609328,292578,74309855,5,Cực kì hài lòng,,approved,0,1,[],160211,Vinameeting,[]
+16949111,441359,74309855,5,Cực kì hài lòng,,approved,0,2,[],160211,Vinameeting,[]
+9906734,10852262,74309855,5,Cực kì hài lòng,"Sản phẩm chuẩn, đẹp, chất lượng âm thanh tốt!",approved,0,1,"[{'id': 2018410, 'full_path': 'https://salt.tikicdn.com/ts/review/f2/fb/e8/33f5041c5ce60dcc91063fb4b241c0e1.jpg', 'status': 'approved'}]",160211,Vinameeting,[]
+16687218,408339,74309855,5,Cực kì hài lòng,,approved,0,5,[],160211,Vinameeting,[]
+16528190,20561012,74309855,5,Hài lòng,,approved,0,2,[],160211,Vinameeting,[]
+16397947,1509604,74309855,5,Cực kì hài lòng,,approved,0,2,[],160211,Vinameeting,[]
+10038226,2011971,74309855,5,Cực kì hài lòng,"Chất lượng tốt. hy vọng dùng dc lâu dài. 
+Tks nhà bán hàng nhiều.",approved,0,0,[],160211,Vinameeting,[]
+10237404,11155831,74309855,5,Cực kì hài lòng,Sản phẩm ok lắm,approved,0,0,"[{'id': 2087255, 'full_path': 'https://salt.tikicdn.com/ts/review/2e/c1/78/91a41aba1f96ad21d5609e160cc7844c.jpg', 'status': 'approved'}]",160211,Vinameeting,[]
+11389187,5529312,74309855,5,Cực kì hài lòng,good quality,approved,0,0,[],160211,Vinameeting,[]
+11835631,5523064,74309855,5,Cực kì hài lòng,,approved,0,0,[],160211,Vinameeting,[]
+10750438,7470178,74309855,5,Cực kì hài lòng,Tốt,approved,0,0,[],160211,Vinameeting,[]
+10889295,11874259,74309855,5,Cực kì hài lòng,,approved,0,0,[],160211,Vinameeting,[]
+10399901,6889185,74309855,5,Cực kì hài lòng,,approved,0,0,[],160211,Vinameeting,[]
+8626711,304812,74309855,5,Cực kì hài lòng,,approved,0,0,[],160211,Vinameeting,[]
+8297962,13545790,74309855,5,Cực kì hài lòng,,approved,0,0,[],160211,Vinameeting,[]
+7605580,1293409,74309855,5,Cực kì hài lòng,,approved,2,0,[],160211,Vinameeting,[]

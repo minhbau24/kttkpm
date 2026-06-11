@@ -1,0 +1,41 @@
+Starting training...
+Epoch 01: train_loss=1.2314 | val_loss=1.0052 | val_auc=0.8656 | val_pr_auc=0.1567 | F1=0.2351
+  --> Saved new best checkpoint to checkpoints/best_purchase_lstm.pt
+Epoch 02: train_loss=0.9097 | val_loss=0.6979 | val_auc=0.8426 | val_pr_auc=0.1307 | F1=0.2375
+Epoch 03: train_loss=0.7684 | val_loss=0.6595 | val_auc=0.8484 | val_pr_auc=0.1382 | F1=0.2375
+Epoch 04: train_loss=0.7522 | val_loss=0.6490 | val_auc=0.8511 | val_pr_auc=0.1381 | F1=0.2375
+Epoch 05: train_loss=0.7539 | val_loss=0.6436 | val_auc=0.8658 | val_pr_auc=0.1567 | F1=0.2375
+  --> Saved new best checkpoint to checkpoints/best_purchase_lstm.pt
+Epoch 06: train_loss=0.7404 | val_loss=0.6444 | val_auc=0.8559 | val_pr_auc=0.1479 | F1=0.2375
+Epoch 07: train_loss=0.7383 | val_loss=0.6436 | val_auc=0.8566 | val_pr_auc=0.1491 | F1=0.2375
+Epoch 08: train_loss=0.7281 | val_loss=0.6418 | val_auc=0.8570 | val_pr_auc=0.1493 | F1=0.2375
+Epoch 09: train_loss=0.7319 | val_loss=0.6493 | val_auc=0.8513 | val_pr_auc=0.1454 | F1=0.2375
+Epoch 10: train_loss=0.7353 | val_loss=0.6454 | val_auc=0.8514 | val_pr_auc=0.1464 | F1=0.2375
+Early stopping at epoch 10
+
+Training metrics log saved to ./data/sequential/figures\purchase_training_log.csv
+
+Loading best model checkpoint from checkpoints/best_purchase_lstm.pt...
+
+========================================
+TEST EVALUATION RESULTS
+========================================
++-------------------------+---------+
+| Metric                  |   Value |
++=========================+=========+
+| Test Loss               |  0.7575 |
++-------------------------+---------+
+| Test Accuracy (thr=0.5) |  0.6893 |
++-------------------------+---------+
+| Test ROC AUC            |  0.8434 |
++-------------------------+---------+
+| Test PR AUC (Avg Prec)  |  0.1708 |
++-------------------------+---------+
+| Test Precision          |  0.153  |
++-------------------------+---------+
+| Test Recall             |  1      |
++-------------------------+---------+
+| Test F1-Score           |  0.2654 |
++-------------------------+---------+
+
+Visualization plot saved successfully to ./data/sequential/figures\purchase_metrics.png

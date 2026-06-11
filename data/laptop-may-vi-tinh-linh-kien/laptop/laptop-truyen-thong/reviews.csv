@@ -1,0 +1,2 @@
+﻿id,customer_id,product_id,rating,title,content,status,thank_count,comment_count,images,seller_id,seller_name,delivery_rating
+20056790,9063447,278871248,2,Không hài lòng,"Chán, chậm, màn không nét",approved,0,2,[],11119,GIA DỤNG VIỆT,"[{'question': 'Thời gian giao hàng?', 'option': 'Giao đúng hẹn'}, {'question': 'Thái độ của shipper?', 'option': 'Lịch sự'}, {'question': 'Giờ giao hàng?', 'option': 'Có hẹn giờ trước'}, {'question': 'Cách đóng gói sản phẩm?', 'option': 'Cẩn thận'}]"

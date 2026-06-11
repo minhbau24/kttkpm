@@ -1,0 +1,20 @@
+﻿id,customer_id,product_id,rating,title,content,status,thank_count,comment_count,images,seller_id,seller_name,delivery_rating
+20214749,12318181,276101023,5,Cực kì hài lòng,,approved,0,0,[],315114,Điện tử Ngọc Huân,[]
+20219826,22137820,276067096,5,Cực kì hài lòng,Dùng ok,approved,0,0,[],26446,Tin Học Hoàng Kim,"[{'question': 'Thời gian giao hàng?', 'option': 'Giao đúng hẹn'}, {'question': 'Thái độ của shipper?', 'option': 'Lịch sự'}, {'question': 'Giờ giao hàng?', 'option': 'Có hẹn giờ trước'}, {'question': 'Cách đóng gói sản phẩm?', 'option': 'Cẩn thận'}]"
+20046543,28034575,276067096,5,Cực kì hài lòng,,approved,0,0,[],26446,Tin Học Hoàng Kim,[]
+20038148,11652093,276074011,5,Cực kì hài lòng,,approved,0,0,[],97441,Luckky Shop,"[{'question': 'Thời gian giao hàng?', 'option': 'Giao đúng hẹn'}, {'question': 'Thái độ của shipper?', 'option': 'Lịch sự'}, {'question': 'Giờ giao hàng?', 'option': 'Có hẹn giờ trước'}, {'question': 'Cách đóng gói sản phẩm?', 'option': 'Cẩn thận'}]"
+20149283,451888,126008082,5,Cực kì hài lòng,,approved,0,1,[],12395,Vi Tính Lê Huy,[]
+19130709,29066594,50325821,5,Cực kì hài lòng,Xài tốt,approved,0,0,"[{'id': 4196936, 'full_path': 'https://salt.tikicdn.com/ts/review/07/3f/f6/890bfdca14362016df0c31cd3cda64f4.jpg', 'status': 'approved'}]",12395,Vi Tính Lê Huy,"[{'question': 'Thời gian giao hàng?', 'option': 'Giao đúng hẹn'}, {'question': 'Thái độ của shipper?', 'option': 'Lịch sự'}, {'question': 'Giờ giao hàng?', 'option': 'Có hẹn giờ trước'}, {'question': 'Cách đóng gói sản phẩm?', 'option': 'Cẩn thận'}]"
+19571817,6772983,50325821,5,Cực kì hài lòng,,approved,0,0,[],12395,Vi Tính Lê Huy,[]
+3890080,3646,50325821,5,Cực kì hài lòng,"Nguồn nguyên tem nguyên kiện, chạy tốt, êm ái và ổn định. Mình rất hài lòng với sản phẩm này.",approved,2,0,"[{'id': 1060208, 'full_path': 'https://salt.tikicdn.com/ts/review/ce/05/7f/6776f998fe929d186961557a51194776.jpg', 'status': 'approved'}, {'id': 1060209, 'full_path': 'https://salt.tikicdn.com/ts/review/fa/50/21/f6dfa86ea46219088354fb029b01df04.jpg', 'status': 'approved'}]",12395,Vi Tính Lê Huy,[]
+4632321,13577102,50325821,5,Cực kì hài lòng,"Đóng gói cẩn thận, giao hàng sớm tận 4 ngày. nguồn đẹp chạy ok, ko ồn, chính hãng mà cinf của fsp thì ko phải lăn tăn?",approved,0,0,[],12395,Vi Tính Lê Huy,[]
+3518540,13346029,50325821,5,quá tuyệt vời,một cục nguồn quá chất lượng phải nói là đáng đồng tiền bát gạo fan kêu rất bé hầu như kh có tiếng phát ra,approved,6,1,[],12395,Vi Tính Lê Huy,[]
+4429069,854561,50325821,4,Hài lòng,"Nguồn bóc hộp mới cứng, còn nguyên seal.  Mỗi tội xử lí đơn hàng hơi lâu.",approved,0,0,[],12395,Vi Tính Lê Huy,[]
+4046418,6283994,50325821,5,Hài Lòng,"Giao hàng nhanh, 2 ngày là có, nguyên seal, nguồn chạy êm ru",approved,0,0,[],12395,Vi Tính Lê Huy,[]
+5710320,8362829,50325821,5,Cực kì hài lòng,,approved,0,0,[],12395,Vi Tính Lê Huy,[]
+4838657,1995834,50325821,5,Cực kì hài lòng,sản phẩm tốt,approved,0,0,[],12395,Vi Tính Lê Huy,[]
+3443110,10597040,50325821,5,Cực kì hài lòng,"hàng nguyên seal mới tinh, 5 sao nhe shop",approved,3,0,[],12395,Vi Tính Lê Huy,[]
+4838080,18083912,50325821,4,Hài lòng,,approved,0,0,[],12395,Vi Tính Lê Huy,[]
+4739985,18261004,50325821,4,Hài lòng,,approved,0,0,[],12395,Vi Tính Lê Huy,[]
+4281636,5639333,50325821,4,Hài lòng,,approved,0,0,[],12395,Vi Tính Lê Huy,[]
+3714666,13953844,50325821,5,Cực kì hài lòng,,approved,0,1,[],12395,Vi Tính Lê Huy,[]

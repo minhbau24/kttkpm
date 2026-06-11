@@ -1,0 +1,6 @@
+Starting training...
+Epoch 1: train_loss=9.4008 val_loss=10.2856 val_hr@10=0.0023 val_ndcg@10=0.0010 val_mrr=0.0006 val_action_acc=0.4722
+
+Training metrics log saved to ./data/sequential\figures\sequential_training_log.csv
+Loading best model checkpoint from checkpoints\best_sequential_model.pt...
+Test: loss=10.4005 hr@10=0.0042 ndcg@10=0.0016 mrr=0.0009 action_acc=0.4322

@@ -1,0 +1,4 @@
+﻿id,customer_id,product_id,rating,title,content,status,thank_count,comment_count,images,seller_id,seller_name,delivery_rating
+19826030,6565785,188406988,5,Cực kì hài lòng,,approved,0,1,[],12395,Vi Tính Lê Huy,[]
+19567718,11541322,185075695,5,Cực kì hài lòng,,approved,0,0,[],12395,Vi Tính Lê Huy,[]
+19893001,29312781,252103804,5,Cực kì hài lòng,Bán main để bh 36th thì trôi bh hết 3th nhắn hỏi shop ko giải thích,approved,0,1,[],9316,TD Computer,"[{'question': 'Thời gian giao hàng?', 'option': 'Giao đúng hẹn'}, {'question': 'Thái độ của shipper?', 'option': 'Lịch sự'}, {'question': 'Giờ giao hàng?', 'option': 'Có hẹn giờ trước'}, {'question': 'Cách đóng gói sản phẩm?', 'option': 'Cẩn thận'}]"

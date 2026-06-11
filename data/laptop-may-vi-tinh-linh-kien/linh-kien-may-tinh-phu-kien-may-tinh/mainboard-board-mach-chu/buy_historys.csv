@@ -1,0 +1,4 @@
+﻿customer_id,product_id,order_id,seller_id,seller_name,quantity,price_at_purchase,total_price,purchased_at,delivery_date,review_id
+6565785,188406988,,12395,Vi Tính Lê Huy,1,,,2024-01-28 15:11:08+00:00,2024-01-30 16:48:43+00:00,19826030
+11541322,185075695,,12395,Vi Tính Lê Huy,3,,,2023-09-12 16:39:24+00:00,2023-09-14 14:04:52+00:00,19567718
+29312781,252103804,,9316,TD Computer,1,,,2024-06-01 06:37:02+00:00,2024-06-04 18:41:53+00:00,19893001

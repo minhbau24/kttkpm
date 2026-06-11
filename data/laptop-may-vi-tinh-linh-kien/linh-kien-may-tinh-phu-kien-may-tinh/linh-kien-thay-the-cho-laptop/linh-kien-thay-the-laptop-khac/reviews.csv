@@ -1,0 +1,8 @@
+﻿id,customer_id,product_id,rating,title,content,status,thank_count,comment_count,images,seller_id,seller_name,delivery_rating
+12811928,13538764,278514919,3,Bình thường,không đúng mẫu đăng trong ảnh,approved,0,0,[],26446,Tin Học Hoàng Kim,[]
+10662122,1498404,278514919,5,Cực kì hài lòng,,approved,0,0,"[{'id': 2317379, 'full_path': 'https://salt.tikicdn.com/ts/review/57/64/f3/5975b44885a7f9ad43f756466a403076.jpg', 'status': 'approved'}]",26446,Tin Học Hoàng Kim,[]
+9986935,394112,278514919,5,Cực kì hài lòng,,approved,0,0,[],26446,Tin Học Hoàng Kim,[]
+9491283,242557,278514919,5,Cực kì hài lòng,,approved,0,0,[],26446,Tin Học Hoàng Kim,[]
+8508986,19073846,278514919,4,Hài lòng,,approved,0,0,[],26446,Tin Học Hoàng Kim,[]
+7080943,15717918,278514919,5,Cực kì hài lòng,,approved,0,0,[],26446,Tin Học Hoàng Kim,[]
+3520744,11480526,278514919,4,Hài lòng,"sản phẩm ok, đúng như hình",approved,0,0,[],26446,Tin Học Hoàng Kim,[]

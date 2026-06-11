@@ -1,0 +1,31 @@
+{
+  "vocab_sizes": {
+    "product": 5284,
+    "action": 9,
+    "category": 2,
+    "price": 4,
+    "seller": 199
+  },
+  "seq_len": 10,
+  "stride": 1,
+  "action_types": [
+    "View",
+    "Click",
+    "Wishlist",
+    "AddCart",
+    "Buy",
+    "Review",
+    "Share",
+    "Search"
+  ],
+  "split_sizes": {
+    "train": 8335,
+    "val": 2946,
+    "test": 3191
+  },
+  "train_path": "./data/sequential\\sequential_train.npz",
+  "val_path": "./data/sequential\\sequential_val.npz",
+  "test_path": "./data/sequential\\sequential_test.npz",
+  "events_path": "./data/sequential\\sequential_events.csv",
+  "fig_dir": "./data/sequential\\figures"
+}

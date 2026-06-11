@@ -1,0 +1,2 @@
+﻿customer_id,product_id,order_id,seller_id,seller_name,quantity,price_at_purchase,total_price,purchased_at,delivery_date,review_id
+12555481,274991042,,16975,Titeck,3,,,2025-09-05 07:11:37+00:00,2025-09-08 15:59:27+00:00,20231500

@@ -1,0 +1,12 @@
+﻿id,customer_id,product_id,rating,title,content,status,thank_count,comment_count,images,seller_id,seller_name,delivery_rating
+20042081,27196778,274610997,5,Cực kì hài lòng,,approved,0,0,"[{'id': 4389892, 'full_path': 'https://salt.tikicdn.com/ts/review/e5/a6/8f/e69d3ca0475a5f807ab90867eff133fc.jpg', 'status': 'approved'}]",43766,OPTORI,[]
+7121502,18572635,71089478,5,Cực kì hài lòng,,approved,0,0,[],12395,Vi Tính Lê Huy,[]
+19396258,25393293,36509593,5,Cực kì hài lòng,Ok,approved,0,0,"[{'id': 4273005, 'full_path': 'https://salt.tikicdn.com/ts/review/e8/9e/a0/354be9ac79bfd0827e8d2baa9465d5c4.jpg', 'status': 'approved'}]",335727,Máy Tính Minh Tú,[]
+17877270,842458,801712,1,Rất không hài lòng,"rất thất vọng vì cửa hàng không hề nói là đây là máy cũ, thậm chí sạc và hộp cũng không chính hãng. Máy cắm vào chạy giật lắc. Đã gửi trả sản phẩm!",approved,3,0,"[{'id': 3915337, 'full_path': 'https://salt.tikicdn.com/ts/review/4f/ba/21/5efac7be54f68a547ccfd270bac4485b.jpg', 'status': 'approved'}, {'id': 3915338, 'full_path': 'https://salt.tikicdn.com/ts/review/be/15/a0/a39af19d04ea407754d0c59b4bf32c6f.jpg', 'status': 'approved'}, {'id': 3915339, 'full_path': 'https://salt.tikicdn.com/ts/review/bd/e4/ab/e0b14f7d78e1638e3551b52d881fa527.jpg', 'status': 'approved'}, {'id': 3915340, 'full_path': 'https://salt.tikicdn.com/ts/review/74/64/26/9b104dd9056d8bd99e39728fe8e5f471.jpg', 'status': 'approved'}, {'id': 3915341, 'full_path': 'https://salt.tikicdn.com/ts/review/4c/2a/4d/6c41e33d2da599d394c129133e2d9cdd.jpg', 'status': 'approved'}]",28737,Quang Vinh Computer,[]
+14386577,10479534,801712,1,Rất không hài lòng,Đang dùng vài tap trình duyệt chrome đơ,approved,3,0,"[{'id': 3010913, 'full_path': 'https://salt.tikicdn.com/ts/review/14/41/97/b669509b2dc09a60f0335379b8a1ddcc.jpg', 'status': 'approved'}]",28737,Quang Vinh Computer,[]
+17546337,16075346,801712,5,Cực kì hài lòng,Rẻ tiền,approved,0,0,[],28737,Quang Vinh Computer,[]
+14337936,7687701,801712,5,Cực kì hài lòng,"Giao nhanh ,máy chạy khá nhanh không lag",approved,1,0,[],28737,Quang Vinh Computer,[]
+14981919,22204541,801712,5,Cực kì hài lòng,,approved,0,0,[],28737,Quang Vinh Computer,[]
+14557731,8469720,801712,5,Cực kì hài lòng,Tốt,approved,0,0,[],28737,Quang Vinh Computer,[]
+14593102,7999910,801712,5,Cực kì hài lòng,,approved,0,0,[],28737,Quang Vinh Computer,[]
+14289801,9906905,801712,4,Hài lòng,,approved,0,0,[],28737,Quang Vinh Computer,[]

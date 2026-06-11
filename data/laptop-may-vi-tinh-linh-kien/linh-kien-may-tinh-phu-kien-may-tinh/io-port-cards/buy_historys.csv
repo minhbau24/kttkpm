@@ -1,0 +1,4 @@
+﻿customer_id,product_id,order_id,seller_id,seller_name,quantity,price_at_purchase,total_price,purchased_at,delivery_date,review_id
+17004398,138831381,,915,Nova Computer,4,,,2025-10-13 14:17:45+00:00,2025-10-15 08:44:08+00:00,20213485
+8921829,138831381,,45223,Bảo Hân Treasures,4,,,2022-04-02 06:08:11+00:00,2022-04-06 13:44:23+00:00,15798645
+7044889,138831381,,45223,Bảo Hân Treasures,2,,,2022-01-13 04:33:22+00:00,2022-01-14 14:11:32+00:00,15243259

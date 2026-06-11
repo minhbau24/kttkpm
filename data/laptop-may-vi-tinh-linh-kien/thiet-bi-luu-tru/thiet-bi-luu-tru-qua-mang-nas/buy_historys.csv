@@ -1,0 +1,3 @@
+﻿customer_id,product_id,order_id,seller_id,seller_name,quantity,price_at_purchase,total_price,purchased_at,delivery_date,review_id
+7245188,247887055,,128476,MKL Quốc Tế,2,,,2022-11-22 09:24:51+00:00,2022-11-24 12:09:20+00:00,18275769
+23740521,247887055,,128476,MKL Quốc Tế,3,,,2022-09-07 08:45:35+00:00,2022-09-09 09:54:29+00:00,17642045

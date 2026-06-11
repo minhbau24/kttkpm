@@ -1,0 +1,23 @@
+﻿id,customer_id,product_id,rating,title,content,status,thank_count,comment_count,images,seller_id,seller_name,delivery_rating
+19654072,17677024,169198068,4,Hài lòng,"Dùng qua khá nhiều đồ của TP-Link rất hài lòng. Nay gặp món này kém quá. Nó vẫn chạy nhưng chất lượng quá kém so với giá tiền.
+
+Để giải quyết thì phải bỏ buổi làm để đem đến chỗ bán. Không lẽ bỏ thu nhập 1tr để chưa chắc giải quyết được món này. Để sưu tầm vậy.
+
+* Dùng speedtest, tốc độ thực của mạng là 800 Mbps (Viettel 1Gbps - Router TP-Link AX73/AX80 CAT6/CAT7 vào thẳng laptop ASUS 15 pro - i512450H - LAN 1Gbpc - WIFI6E, hoặc wifi AX80 với Galaxy S22). 
+- Thiết kế bộ này port RJ45 là 1Gbps
+- Thử cắm 2 cục cùng 1 ổ cắm thì tốc độ còn 350 Mbps.
+- Cắm khác ổ điện cùng phòng thì còn 50 Mbps
+- Phòng kế bên thì 15 - 30 Mbps.
+- Khác tầng mất luôn.
+
+Chọn 4* chứ thực ra muốn tick 2 * thôi.",approved,0,1,[],915,Nova Computer,[]
+19685911,22717128,169198068,1,Rất không hài lòng,"tốc độ rất châm5 so với truyển wifi. ???
+Cùng 1 máy cùng 1 router ma chên lệch quá.",approved,0,2,[],154163,TP-Link Official Store,"[{'question': 'Thời gian giao hàng?', 'option': 'Giao đúng hẹn'}, {'question': 'Thái độ của shipper?', 'option': 'Lịch sự'}, {'question': 'Giờ giao hàng?', 'option': 'Có hẹn giờ trước'}, {'question': 'Cách đóng gói sản phẩm?', 'option': 'Cẩn thận'}]"
+19568037,19985374,169198068,5,Cực kì hài lòng,"Quá tốt, tốc độ ko khác gì sử dụng trực tiếp vào modem",approved,0,1,[],154163,TP-Link Official Store,"[{'question': 'Thời gian giao hàng?', 'option': 'Giao đúng hẹn'}, {'question': 'Thái độ của shipper?', 'option': 'Lịch sự'}, {'question': 'Giờ giao hàng?', 'option': 'Có hẹn giờ trước'}, {'question': 'Cách đóng gói sản phẩm?', 'option': 'Cẩn thận'}]"
+19665988,14116663,169198068,5,Cực kì hài lòng,,approved,0,1,[],154163,TP-Link Official Store,"[{'question': 'Thời gian giao hàng?', 'option': 'Giao đúng hẹn'}, {'question': 'Thái độ của shipper?', 'option': 'Lịch sự'}, {'question': 'Giờ giao hàng?', 'option': 'Có hẹn giờ trước'}, {'question': 'Cách đóng gói sản phẩm?', 'option': 'Cẩn thận'}]"
+19624870,6097077,169198068,5,Cực kì hài lòng,,approved,0,0,[],915,Nova Computer,[]
+19247473,7403682,169198068,5,Cực kì hài lòng,,approved,0,1,[],154163,TP-Link Official Store,[]
+19233433,5708013,169198068,5,Cực kì hài lòng,,approved,0,1,[],154163,TP-Link Official Store,"[{'question': 'Thời gian giao hàng?', 'option': 'Giao đúng hẹn'}, {'question': 'Thái độ của shipper?', 'option': 'Lịch sự'}, {'question': 'Giờ giao hàng?', 'option': 'Có hẹn giờ trước'}, {'question': 'Cách đóng gói sản phẩm?', 'option': 'Cẩn thận'}]"
+19170884,8409590,169198068,5,Cực kì hài lòng,,approved,1,1,[],154163,TP-Link Official Store,[]
+19089589,5199231,169198068,5,Cực kì hài lòng,,approved,0,1,[],154163,TP-Link Official Store,"[{'question': 'Thời gian giao hàng?', 'option': 'Giao đúng hẹn'}, {'question': 'Thái độ của shipper?', 'option': 'Lịch sự'}, {'question': 'Giờ giao hàng?', 'option': 'Có hẹn giờ trước'}, {'question': 'Cách đóng gói sản phẩm?', 'option': 'Cẩn thận'}]"
+18598082,664414,169198068,5,Cực kì hài lòng,,approved,0,1,[],154163,TP-Link Official Store,[]
